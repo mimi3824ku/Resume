@@ -25,7 +25,7 @@ var app = new Vue({
 
       let oldTodoString = window.localStorage.getItem('todoEdit');
       let oldTodo = JSON.parse(oldTodoString);
-      this.newTodo = oldTodo || [];
+      this.newTodo = oldTodo || '';
     },
     methods: {
         addTodo: function(){
