@@ -13,9 +13,12 @@
   },
   "repository": {
     "type": "git",
-      "url": "git+https://github.com/mimi3824ku/resume.git"
+    "url": "git+https://github.com/mimi3824ku/resume.git"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "css-loader": "^0.26.1",
+    "style-loader": "^0.13.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

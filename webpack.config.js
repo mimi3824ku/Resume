@@ -11,8 +11,12 @@ module.exports = {
             {
                 test: /\.js[x]?$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader?presets[]=es2015&presets[]=react'
+                loader: 'babel-loader?presets[]=es2015'
             },
+            {
+                test: /\.css$/,
+                loader: 'style!css'
+            }
         ]
     },
     resolve: {

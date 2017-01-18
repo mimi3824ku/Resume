@@ -1,7 +1,8 @@
 /**
  * Created by Administrator on 2017/1/10.
  */
-import Vue from 'vue'
+import Vue from 'vue';
+import './main.css';
 
 var app = new Vue({
     el: '#app',
