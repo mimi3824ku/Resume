@@ -46,45 +46,60 @@
 
 	'use strict';
 
-	var _bar = __webpack_require__(1);
-
-	var _bar2 = _interopRequireDefault(_bar);
-
-	var _vue = __webpack_require__(2);
+	var _vue = __webpack_require__(1);
 
 	var _vue2 = _interopRequireDefault(_vue);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	/**
-	 * Created by Administrator on 2017/1/10.
-	 */
 	var app = new _vue2.default({
 	    el: '#app',
 	    data: {
-	        message: 'Hello Wayne!'
+	        newTodo: '',
+	        todoList: [],
+	        activeClass: 'isFinished'
+	    },
+	    created: function created() {
+	        var _this = this;
+
+	        window.onbeforeunload = function () {
+	            var dataString = JSON.stringify(_this.todoList);
+	            window.localStorage.setItem('myTodos', dataString);
+	        };
+
+	        var oldDataString = window.localStorage.getItem('myTodos');
+	        var oldData = JSON.parse(oldDataString);
+	        this.todoList = oldData || [];
+	    },
+	    methods: {
+	        addTodo: function addTodo() {
+	            this.todoList.push({
+	                title: this.newTodo,
+	                createdAt: new Date(),
+	                year: new Date().getFullYear(),
+	                month: new Date().getMonth() + 1,
+	                date: new Date().getDate(),
+	                hour: new Date().getHours(),
+	                minute: new Date().getMinutes(),
+	                second: new Date().getSeconds(),
+	                done: false
+	            });
+	            this.newTodo = '';
+	        },
+	        addClass: function addClass(todo) {
+	            todo.style.textDecoration = 'line-through';
+	        },
+	        removeTodo: function removeTodo(todo) {
+	            var index = this.todoList.indexOf(todo);
+	            this.todoList.splice(index, 1);
+	        }
 	    }
-	});
+	}); /**
+	     * Created by Administrator on 2017/1/10.
+	     */
 
 /***/ },
 /* 1 */
-/***/ function(module, exports) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = bar;
-	/**
-	 * Created by Administrator on 2017/1/10.
-	 */
-	function bar() {
-	  alert('Hello Webpack!');
-	}
-
-/***/ },
-/* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process, global) {/*!
@@ -8603,10 +8618,10 @@
 
 	module.exports = Vue$3;
 
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2), (function() { return this; }())))
 
 /***/ },
-/* 3 */
+/* 2 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser

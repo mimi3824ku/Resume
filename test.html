@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="//cdn.bootcss.com/jquery/2.1.1/jquery.js"></script>
+</head>
+<body>
+<script>
+    $.get('http://api.jirengu.com/fm/getChannels.php')
+            .done(function(channelInfo){
+                console.log(channelInfo)
+            });
+</script>
+</body>
+</html>
