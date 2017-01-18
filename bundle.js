@@ -63,13 +63,20 @@
 	        var _this = this;
 
 	        window.onbeforeunload = function () {
+	            var todoString = JSON.stringify(_this.newTodo);
 	            var dataString = JSON.stringify(_this.todoList);
+
+	            window.localStorage.setItem('todoEdit', todoString);
 	            window.localStorage.setItem('myTodos', dataString);
 	        };
 
 	        var oldDataString = window.localStorage.getItem('myTodos');
 	        var oldData = JSON.parse(oldDataString);
 	        this.todoList = oldData || [];
+
+	        var oldTodoString = window.localStorage.getItem('todoEdit');
+	        var oldTodo = JSON.parse(oldTodoString);
+	        this.newTodo = oldTodo || [];
 	    },
 	    methods: {
 	        addTodo: function addTodo() {

@@ -12,13 +12,20 @@ var app = new Vue({
     },
     created: function(){
       window.onbeforeunload = ()=>{
-          let dataString = JSON.stringify(this.todoList)
-          window.localStorage.setItem('myTodos',dataString)
-      }
+          let todoString = JSON.stringify(this.newTodo);
+          let dataString = JSON.stringify(this.todoList);
 
-      let oldDataString = window.localStorage.getItem('myTodos')
-      let oldData = JSON.parse(oldDataString)
-      this.todoList = oldData || []
+          window.localStorage.setItem('todoEdit',todoString);
+          window.localStorage.setItem('myTodos',dataString);
+      };
+
+      let oldDataString = window.localStorage.getItem('myTodos');
+      let oldData = JSON.parse(oldDataString);
+      this.todoList = oldData || [];
+
+      let oldTodoString = window.localStorage.getItem('todoEdit');
+      let oldTodo = JSON.parse(oldTodoString);
+      this.newTodo = oldTodo || [];
     },
     methods: {
         addTodo: function(){
@@ -32,14 +39,14 @@ var app = new Vue({
                 minute: new Date().getMinutes(),
                 second: new Date().getSeconds(),
                 done: false
-            })
+            });
             this.newTodo = ''
         },
         addClass: function(todo){
               todo.style.textDecoration = 'line-through';
         },
         removeTodo: function(todo){
-            let index = this.todoList.indexOf(todo)
+            let index = this.todoList.indexOf(todo);
             this.todoList.splice(index,1)
         }
     }
