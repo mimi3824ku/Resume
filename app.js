@@ -3,13 +3,28 @@
  */
 import Vue from 'vue';
 import './main.css';
+import AV from 'leancloud-storage'
+
+var APP_ID = '0f9uTIkIW3Dvx4e6uNGk5MUc-gzGzoHsz';
+var APP_KEY = 'Sma0bnOKSIPWb6I5HGVq0TmT';
+AV.init({
+    appId: APP_ID,
+    appKey: APP_KEY
+});
 
 var app = new Vue({
     el: '#app',
     data: {
         newTodo: '',
         todoList: [],
-        activeClass: 'isFinished'
+        currentUser: null,
+        activeClass: 'isFinished',
+        picked: 'picked',
+        actionType: 'signUp',
+        formData: {
+            username: '',
+            password: ''
+        }
     },
     created: function(){
       window.onbeforeunload = ()=>{
@@ -27,6 +42,8 @@ var app = new Vue({
       let oldTodoString = window.localStorage.getItem('todoEdit');
       let oldTodo = JSON.parse(oldTodoString);
       this.newTodo = oldTodo || '';
+
+      this.currentUser = this.getCurrentUser();
     },
     methods: {
         addTodo: function(){
@@ -49,6 +66,37 @@ var app = new Vue({
         removeTodo: function(todo){
             let index = this.todoList.indexOf(todo);
             this.todoList.splice(index,1)
+        },
+        signUp: function () {
+            let user = new AV.User();
+            user.setUsername(this.formData.username);
+            user.setPassword(this.formData.password);
+            user.signUp().then((loginedUser) => {
+                this.currentUser = this.getCurrentUser()
+            }, (error) => {
+                alert('×¢²áÊ§°Ü')
+            });
+        },
+        login: function () {
+            AV.User.logIn(this.formData.username, this.formData.password).then((loginedUser) => {
+                this.currentUser = this.getCurrentUser()
+            }, (error) => {
+                alert('µÇÂ¼Ê§°Ü')
+            });
+        },
+        getCurrentUser: function () {
+            let current = AV.User.current()
+            if (current) {
+                let {id, createdAt, attributes: {username}} = current;
+                return {id, username, createdAt}
+            } else {
+                return null
+            }
+        },
+        logout: function () {
+            AV.User.logOut();
+            this.currentUser = null;
+            window.location.reload()
         }
     }
 });

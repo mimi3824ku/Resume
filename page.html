@@ -7,17 +7,53 @@
 <div class="todo-wrapper">
     <div class="todoApp" id="app">
         <h1>My Todo</h1>
-        <div class="newTask">
-            <label for="addTodo">添加任务:</label>
-            <input id="addTodo" class="addTodo" type="text" v-model="newTodo" @keypress.enter="addTodo">
-        </div>
-        <ol class="todos">
-            <li v-for="todo in todoList" v-bind:class="[todo.done?activeClass:'']">
-                <input class="tick" type="checkbox"  v-model="todo.done">
-                {{ todo.title }}
-                <button class="delete" @click="removeTodo(todo)">删除</button>
-                <span class="finished" v-if="todo.done">Finished</span>
-                <span class="unfinished" v-else>Unfinished</span>
+        <section id="signInAndSignUp" v-if="!currentUser" class="signInAndSignUp">
+            <div class="tab">
+                <input type="radio" name="type" v-model="actionType" value="signUp" id="signUp">
+                <label for="signUp" @click="picked($event)">注册</label>
+                <input type="radio" name="type" v-model="actionType" value="login" id="login">
+                <label for="login">登入</label>
+            </div>
+            <div class="signUp" v-if="actionType=='signUp'">
+                <form @submit.prevent="signUp">
+                    <div class="formRow">
+                        用户名:<input type="text" v-model="formData.username">
+                    </div>
+                    <div class="formRow">
+                        &nbsp密码:&nbsp&nbsp<input type="password" v-model="formData.password">
+                    </div>
+                    <div class="formActions">
+                        <input type="submit" value="注册">
+                    </div>
+                </form>
+            </div>
+            <div class="login" v-if="actionType=='login'">
+                <form @submit.prevent="login">
+                    <div class="formRow">
+                        用户名:<input type="text" v-model="formData.username">
+                    </div>
+                    <div class="formRow">
+                        &nbsp密码:&nbsp&nbsp<input type="password" v-model="formData.password">
+                    </div>
+                    <div class="formActions">
+                        <input type="submit" value="登入">
+                    </div>
+                </form>
+            </div>
+        </section>
+        <section class="todo-section" id="todo" v-if="currentUser">
+            <p class="logout"><button @click="logout">×</button></p>
+            <div class="newTask">
+                <label for="addTodo">添加任务:</label>
+                <input id="addTodo" class="addTodo" type="text" v-model="newTodo" @keypress.enter="addTodo">
+            </div>
+            <ol class="todos">
+                <li v-for="todo in todoList" v-bind:class="[todo.done?activeClass:'']">
+                    <input class="tick" type="checkbox"  v-model="todo.done">
+                    {{ todo.title }}
+                    <button class="delete" @click="removeTodo(todo)">删除</button>
+                    <span class="finished" v-if="todo.done">Finished</span>
+                    <span class="unfinished" v-else>Unfinished</span>
                 <span class="createdTime" v-model="todo.createdAt">
                     <span>---创建时间：</span>
                     {{ todo.year }}年
@@ -27,9 +63,10 @@
                     {{ todo.minute }}分
                     {{ todo.second }}秒
                 </span>
-            </li>
+                </li>
+            </ol>
+        </section>
 
-        </ol>
     </div>
 </div>
 
