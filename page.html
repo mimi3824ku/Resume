@@ -6,6 +6,7 @@
 <body>
 <div class="todo-wrapper">
     <div class="todoApp" id="app">
+        <div class="cover" v-show="!currentUser"></div>
         <h1>My Todo</h1>
         <section id="signInAndSignUp" v-if="!currentUser" class="signInAndSignUp">
             <div class="tab">
@@ -42,7 +43,8 @@
             </div>
         </section>
         <section class="todo-section" id="todo" v-if="currentUser">
-            <p class="logout"><button @click="logout">×</button></p>
+            <p class="logout"><button @click="logout" title="登出">×</button></p>
+            <p class="loginUser"><span>{{ currentUser.username }}</span> Online!</p>
             <div class="newTask">
                 <label for="addTodo">添加任务:</label>
                 <input id="addTodo" class="addTodo" type="text" v-model="newTodo" @keypress.enter="addTodo">
@@ -59,14 +61,11 @@
                     {{ todo.year }}年
                     {{ todo.month }}月
                     {{ todo.date }}日
-                    {{ todo.hour }}时
-                    {{ todo.minute }}分
-                    {{ todo.second }}秒
+                    {{ todo.hour }}:{{ todo.minute }}:{{ todo.second }}
                 </span>
                 </li>
             </ol>
         </section>
-
     </div>
 </div>
 

@@ -37,6 +37,16 @@ html,body{
     box-shadow: 0 0 6px 0 rgba(0,0,0,0.5);
 }
 
+.cover{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 999;
+}
+
 .todoApp h1{
     font-size: 4rem ;
     line-height: 6rem;
@@ -101,6 +111,7 @@ html,body{
 .todoApp .todos>li .unfinished{
     position: absolute;
     right: 50px;
+    top: 5px;
     font-size: 1.2rem;
     background: springgreen;
     padding: 1px;
@@ -120,9 +131,11 @@ html,body{
     margin: 80px auto 0 auto;
     width: 220px;
     height: 140px;
-    background-color: rgba(255,255,255,0.3);
+    background-color: rgba(255,255,255,0.6);
     border-radius: 20px;
     padding: 10px 0;
+    position: relative;
+    z-index: 99999;
 }
 
 .signInAndSignUp .tab{
@@ -228,4 +241,20 @@ input[type='radio']:checked + label:before {
 
 .todo-section .logout>button:hover{
     background-color: rgba(220,20,60,1);
+}
+
+.todo-section .loginUser{
+    position: absolute;
+    top: 380px;
+    right: 10px;
+    padding: 10px;
+    border-radius: 30%;
+    border: 2px dotted #7FFFD4;
+    color: #FF6666;
+    background-color: rgba(255,255,0,0.6)
+}
+
+.todo-section .loginUser>span{
+    font: bolder italic 1.4rem arial;
+    text-decoration: underline;
 }
