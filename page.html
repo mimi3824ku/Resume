@@ -50,9 +50,9 @@
                 <input id="addTodo" class="addTodo" type="text" v-model="newTodo" @keypress.enter="addTodo">
             </div>
             <ol class="todos">
-                <li v-for="todo in todoList" v-bind:class="[todo.done?activeClass:'']">
+                <li v-for="todo in todoList">
                     <input class="tick" type="checkbox"  v-model="todo.done">
-                    {{ todo.title }}
+                    <span class="taskNote"  v-bind:class="[todo.done?activeClass:'']" v-bind:title="todo.title">{{ todo.title }}</span>
                     <button class="delete" @click="removeTodo(todo)">删除</button>
                     <span class="finished" v-if="todo.done">Finished</span>
                     <span class="unfinished" v-else>Unfinished</span>
